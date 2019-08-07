@@ -35,19 +35,21 @@
         {% endif %}
       {% endif %}
 
-      {% if reservations and restaurant.owner != user %}
+      
       <ol>
         {% for reservation in reservations %}
-        <li>
-              <p> <time datetime="{{ reservation.date_and_time }}">{{ reservation.date }} at {{ reservation.time }} </time> </p>
-              <p> {{ reservation.user.profile.last_name }}, party of {{ reservation.party_size }} </p>
-              {% if reservation.notes %}
-                <p class='notes'>{{ reservation.notes }}</p>
-              {% endif %}
-        </li>
+          {% if reservations and restaurant.owner != user %}
+          <li>
+                <p> <time datetime="{{ reservation.date_and_time }}">{{ reservation.date }} at {{ reservation.time }} </time> </p>
+                <p> {{ reservation.user.profile.last_name }}, party of {{ reservation.party_size }} </p>
+                {% if reservation.notes %}
+                  <p class='notes'>{{ reservation.notes }}</p>
+                {% endif %}
+          </li>
+          {% endif %}
         {% endfor %}
       </ol>
-      {% endif %}
+      
       <form method='POST' action="{% url 'reservation_create' restaurant_id=restaurant.pk%}">
         {% csrf_token %}
         {{ reservation_form.as_p }}
