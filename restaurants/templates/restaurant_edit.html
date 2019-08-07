@@ -1,15 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if restaurant.user == user %}
-  <form action="{% url 'restaurant_edit' id=restaurant.pk %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update">
-  </form>
-{% else %}
+{% if error_message %}
   <p> 
     Error 401 - you are not authorized to edit restaurant details. <br>
-    Please  log in if you are the restaurant user. 
+    Please log in as the restaurant user. 
   </p>
 
   {% if user.is_not_authenticated %}
@@ -18,6 +12,16 @@
     <a href= "{% url 'login'%}"> login </a>
   </p>
   {% endif %}
+
+{% else %}
+
+
+  <form action="{% url 'restaurant_edit' id=restaurant.pk %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+  </form>
+
 {% endif %}
 
 
