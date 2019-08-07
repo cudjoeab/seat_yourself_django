@@ -35,7 +35,7 @@
         {% endif %}
       {% endif %}
 
-      {% if reservations %}
+      {% if reservations and restaurant.owner != user %}
       <ol>
         {% for reservation in reservations %}
         <li>
